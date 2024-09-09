@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", async () => {
+import { getShopProducts } from "./network.js";
+
+export async function displayShopProducts() {
     try {
         const shopProducts = await getShopProducts();
         const shopProductsView = document.getElementById("shopProducts");
@@ -26,7 +28,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
         console.error(error);
     }
-});
+}
 
-//example of image url
 //image: "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"
