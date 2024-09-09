@@ -3,12 +3,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     const shopProducts = await getShopProducts();
     const shopProductsView = document.getElementById("shopProducts");
 
-    shopProducts.forEach((product) => {
-      console.log("product.image", product.image);
+    shopProducts.forEach(({ image, title, description }) => {
+      console.log("product.image", image);
+      console.log("product.description", description);
+      console.log("product.title", title);
 
-      const productItem = document.createElement("li");
-      productItem.style = `background-position: center; background-repeat: no-repeat; background-size: contain; color: white; background-image: url('${product.image}'); width: 100px; height: 100px`;
-      shopProductsView.appendChild(productItem);
+      // add title
+      const titleView = document.createElement("h1");
+      titleView.textContent = title;
+      shopProductsView.appendChild(titleView);
+
+      //add description
+      const descriptionView = document.createElement("p");
+      descriptionView.textContent = description;
+      shopProductsView.appendChild(descriptionView);
+
+      // add image
+      const productView = document.createElement("li");
+      productView.style = `background-position: center; background-repeat: no-repeat; background-size: contain; color: white; background-image: url('${image}'); width: 100px; height: 100px`;
+      shopProductsView.appendChild(productView);
     });
   } catch (error) {
     console.error(error);
