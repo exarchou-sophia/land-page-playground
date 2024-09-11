@@ -1,9 +1,19 @@
-import { displayProductsInViewId } from "./ui.js";
+export const saveProduct = product => {
+    console.log("save product", product);
 
-// const productCardView = displayProductsInViewId;
-// const basketState =
+    // check if the same product is already in?
+    // if so than get it and increment amount and save
+    let currentQuantity = 0;
+    const storedProductString = localStorage.getItem(product.id);
+    if (storedProductString) {
+        const storedProduct = JSON.parse(storedProductString);
+        currentQuantity = storedProduct.quantity;
+    }
 
-// document.addEventListener('click', function(event) {
-// 	if
-// // //document.addEventListener("DOMContentLoaded", async () => {
-// // // await ???();
+    const productWithQuantity = {
+        quantity: currentQuantity + 1,
+        ...product,
+    };
+
+    localStorage.setItem(product.id, JSON.stringify(productWithQuantity));
+};

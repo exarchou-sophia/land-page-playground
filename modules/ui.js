@@ -1,21 +1,42 @@
-export const createProductView = ({ image, title, price }) => {
+export const createProductView = (
+    { id, image, title, price },
+    imageSize = 50
+) => {
     const titleView = document.createElement("p");
     titleView.textContent = title;
 
-    const imageView = document.createElement("div");
-    imageView.style = `background-position: center; background-repeat: no-repeat; background-size: contain; box-shadow: 0px 4px 8px ; border-radius:10px; background-image: url('${image}'); width: 200px; height: 200px`;
-    // imageView.className = "w-[100px] h-[100px] rounded-lg shadow-lg";
+    const imgView = document.createElement("img");
+    imgView.src = image;
+    imgView.width = imageSize;
+    imgView.height = imageSize;
+    imgView.style = "object-fit: cover";
+
     const priceView = document.createElement("p");
-    priceView.textContent = "€" + price;
+    priceView.textContent = `${price}€`;
 
     const productView = document.createElement("div");
-    // productView.style =
-    //     "display: flex; flex-direction: column; background-color: white";
+    productView.id = `product-view-${id}`;
     productView.appendChild(titleView);
-    productView.appendChild(imageView);
+    productView.appendChild(imgView);
     productView.appendChild(priceView);
 
     return productView;
+};
+
+export const createProductViewWithQuantity = (product, quantity) => {
+    const productView = createProductView(product);
+
+    const wrapper = document.createElement("div");
+    wrapper.id = `product-view-${product.id}`;
+
+    wrapper.style = "display: flex; flex-direction: column;";
+    wrapper.appendChild(productView);
+
+    const quantityText = document.createElement("p");
+    quantityText.textContent = `Quantity: ${quantity}`;
+
+    wrapper.appendChild(quantityText);
+    return wrapper;
 };
 
 export const createProductListView = (products, onProductClicked) => {
@@ -43,39 +64,25 @@ export const createProductListView = (products, onProductClicked) => {
     return productViewList;
 };
 
-//I want 1. the product to go to basket and 2. be saved in local storage on click.
-
-//3. I want the product to be incremented depending on how many clicks it gets
-
 export const addProductToBasket = product => {
-    // create product view
-    const productView = createProductView(product);
-
     const basketView = document.getElementById("basketListViewId");
-    basketView.appendChild(productView);
-};
-
-export const saveProduct = product => {
-    // check if the same product is already in?
-    // if so than get it and increment amount and save
-    let currentQuantity = 0;
-    const storedProductString = localStorage.getItem(product.id);
-    if (storedProductString) {
-        const storedProduct = JSON.parse(storedProductString);
-        currentQuantity = storedProduct.quantity;
-    }
-
-    const productWithQuantity = {
-        quantity: currentQuantity + 1,
-        ...product,
-    };
-
-    productWithQuantity.localStorage.setItem(
-        product.id,
-        JSON.stringify(productWithQuantity)
+    const currentProductView = basketView.querySelector(
+        `#product-view-${product.id}`
     );
-};
 
-// localStorage.getItem("on product clicked") || [];
-// savedProducts.push(product);
-// localStorage.setItem("clickedProducts", JSON.stringify(savedProducts));
+    console.log(" `product-view-${product.id}`", `product-view-${product.id}`);
+    console.log("currentProductView", currentProductView);
+
+    if (currentProductView) {
+        const productFromStorage = JSON.parse(localStorage.getItem(product.id));
+
+        basketView.replaceChild(
+            createProductViewWithQuantity(product, productFromStorage.quantity),
+            currentProductView
+        );
+    } else {
+        const productView = createProductView(product, 50);
+        productView.style = "display: flex;";
+        basketView.appendChild(productView);
+    }
+};
