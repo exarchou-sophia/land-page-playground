@@ -3,14 +3,14 @@ export const createProductView = ({ image, title, price }) => {
     titleView.textContent = title;
 
     const imageView = document.createElement("div");
-    imageView.style = `background-position: center; background-repeat: no-repeat; background-size: contain; box-shadow: 0px 4px 8px black; border-radius:10px; background-image: url('${image}'); width: 100px; height: 100px`;
-
+    imageView.style = `background-position: center; background-repeat: no-repeat; background-size: contain; box-shadow: 0px 4px 8px ; border-radius:10px; background-image: url('${image}'); width: 200px; height: 200px`;
+    // imageView.className = "w-[100px] h-[100px] rounded-lg shadow-lg";
     const priceView = document.createElement("p");
     priceView.textContent = "€" + price;
 
     const productView = document.createElement("div");
-    productView.style =
-        "display: flex; flex-direction: column; background-color: beige";
+    // productView.style =
+    //     "display: flex; flex-direction: column; background-color: white";
     productView.appendChild(titleView);
     productView.appendChild(imageView);
     productView.appendChild(priceView);
@@ -20,7 +20,19 @@ export const createProductView = ({ image, title, price }) => {
 
 export const createProductListView = (products, onProductClicked) => {
     const productViewList = document.createElement("div");
-    productViewList.style = "display: flex, flex-direction: column;";
+    productViewList.classList.add(
+        "grid",
+        "grid-cols-4",
+        "gap-4",
+        "w-full",
+        "h-64",
+        "rounded-lg",
+        "bg-no-repeat",
+        "bg-center",
+        "bg-cover",
+        "shadow-lg",
+        "border"
+    );
 
     products.forEach(product => {
         const productView = createProductView(product);
@@ -57,7 +69,11 @@ export const saveProduct = product => {
         quantity: currentQuantity + 1,
         ...product,
     };
-    localStorage.setItem(product.id, JSON.stringify(productWithQuantity));
+
+    productWithQuantity.localStorage.setItem(
+        product.id,
+        JSON.stringify(productWithQuantity)
+    );
 };
 
 // localStorage.getItem("on product clicked") || [];

@@ -4,26 +4,35 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script src="https://cdn.tailwindcss.com"></script>
-
+        <link rel="stylesheet" href="styles.css" />
         <title>Shop till you drop</title>
     </head>
-    <body>
-        <header class="flex">
-            <h1>Welcome to Shop till you Drop...</h1>
-            <h2>all your dream products in our basket</h2>
-            <h3>Your Basket</h3>
-            <ul id="basketItems"></ul>
+    <body class="font-sans">
+        <header
+            class="flex justify-around items-center py-px bg-cyan-600 flex-wrap sticky top-0"
+        >
+            <h1 class="text-4xl font-bold text-yellow-400 my-4">
+                Shop till you drop
+            </h1>
+            <h2 class="text-2xl font-bold text-yellow-400 my-4">
+                all your dreams in ...
+            </h2>
+            <section class="w-1/2 flex justify-end">
+                <h3 class="text-xl font-bold text-yellow-400 my-4 text-right">
+                    your Basket
+                    <img src="icons8-einkaufen-64.png" class="inline-block" />
+                </h3>
+                <ul id="basketItems" class="text-right"></ul>
+                <div id="basketListViewId" class="text-right"></div>
+            </section>
         </header>
 
-        <main style="display: flex">
-            <section style="width: 50%; background-color: azure">
-                <h1 style="font-size: 24px">Product List</h1>
+        <main>
+            <section class="w-auto">
+                <h1 class="text-4xl font-bold text-cyan-600 my-4">
+                    Product List
+                </h1>
                 <div id="productListViewId"></div>
-            </section>
-
-            <section style="width: 50%; background-color: beige">
-                <h1 style="font-size: 24px">Basket</h1>
-                <div id="basketListViewId"></div>
             </section>
         </main>
 
