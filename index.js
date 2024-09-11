@@ -10,8 +10,8 @@ export const displayProductsInViewId = async viewId => {
         const shopProducts = await getShopProducts();
         const productViewList = createProductListView(shopProducts, product => {
             console.log("on product clicked", product);
-            addProductToBasket(product);
             saveProduct(product);
+            addProductToBasket(product);
         });
 
         view.appendChild(productViewList);
