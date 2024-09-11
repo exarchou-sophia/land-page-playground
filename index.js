@@ -1,10 +1,7 @@
-import {
-    addProductToBasket,
-    createProductListView,
-    saveProduct,
-} from "./modules/ui.js";
+import { addProductToBasket, createProductListView } from "./modules/ui.js";
 
 import { getShopProducts } from "./modules/network.js";
+import { saveProduct } from "./modules/storage.js";
 
 export const displayProductsInViewId = async viewId => {
     try {
@@ -33,4 +30,15 @@ window.addEventListener("storage", event => {
 document.addEventListener("DOMContentLoaded", async () => {
     await displayProductsInViewId("productListViewId");
     // await displayProductsInViewId("basketListViewId");
+    console.log("localStorage.length", localStorage.length);
+
+    // sync products in storage with basket view
+    for (let i = 0; i < localStorage.length; i++) {
+        const productKeyInStorage = localStorage.key(i);
+        const productFromStorage = JSON.parse(
+            localStorage.getItem(productKeyInStorage)
+        );
+
+        addProductToBasket(productFromStorage);
+    }
 });
