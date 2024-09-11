@@ -1,4 +1,9 @@
-import { createProductListView } from "./modules/ui.js";
+import {
+    addProductToBasket,
+    createProductListView,
+    saveProduct,
+} from "./modules/ui.js";
+
 import { getShopProducts } from "./modules/network.js";
 
 export const displayProductsInViewId = async viewId => {
@@ -8,6 +13,8 @@ export const displayProductsInViewId = async viewId => {
         const shopProducts = await getShopProducts();
         const productViewList = createProductListView(shopProducts, product => {
             console.log("on product clicked", product);
+            addProductToBasket(product);
+            saveProduct(product);
         });
 
         view.appendChild(productViewList);
@@ -25,5 +32,5 @@ window.addEventListener("storage", event => {
 
 document.addEventListener("DOMContentLoaded", async () => {
     await displayProductsInViewId("productListViewId");
-    await displayProductsInViewId("basketListViewId");
+    // await displayProductsInViewId("basketListViewId");
 });
